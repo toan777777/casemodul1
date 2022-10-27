@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="thu.css">
+</head>
+<body>
+Name: <input id="inputName" placeholder="Nhập tên"><br>
+Img: <input id="inputImg" placeholder="Nhập ảnh"><br>
+Age: <input id="inputAge" placeholder="Nhập tuổi"><br>
+<button onclick="add()">ADD</button>
+<h2>Danh sách tên</h2>
+<table id="show" width="400">
+  <div id=" aq" style="">
+    <button> xem thêm còn nhiều lắm</button>
+  </div>
+
+</table>
+</body>
+</html>
+
+<script>
+  class Student{
+    name;
+    age;
+    img;
+
+    constructor(name, age, img) {
+      this.name = name;
+      this.age = age;
+      this.img = img;
+    }
+  }
+
+  localStorage.setItem("toan",JSON.stringify(students));
+
+  let ngat = new Student("Ngát", 18, "https://toanthaydinh.com/wp-content/uploads/2020/04/3438032811_deef1ec060_z.jpg");
+  let toan = new Student("Toàn",20, "https://kenh14cdn.com/thumb_w/660/2020/7/17/brvn-15950048783381206275371.jpg");
+
+  let students = [ngat, toan];
+  let divShow = document.getElementById("show");
+
+  function show() {
+    let str = "";
+    for (let i = 0; i < students.length; i++) {
+      str += `<table border="1">
+<tr>
+<td rowspan="3"><img src="${students[i].img}" width="500" height="350"></td>
+
+<td colspan="2">${students[i].name}</td>
+</tr>
+<tr>
+
+<td > <button  style="background-color: blue" type="button" > like</button></td>
+<td>share</td>
+</tr>
+<tr>
+
+<td><button onclick="edit(${i})">Edit</button></td>
+<td><button onclick="xoa(${i})">Delete</button></td>
+</tr>
+
+                        <td></td>
+                        <td></td>
+                        <td>${students[i].age}</td>
+
+                        <td></td>
+                        <td></td>
+                        </table>`
+
+
+    }
+    divShow.innerHTML = str;
+  }
+
+  show();
+
+  function edit(index) {
+    let name = prompt("Nhập name muốn sửa");
+    let img = prompt("Nhập img muốn sửa");
+    let age = prompt("Nhập age muốn sửa");
+    let newObj = new Student(name,age,img);
+    students.splice(index, 1, newObj);
+    show();
+  }
+
+  function add() {
+    let name = document.getElementById("inputName").value;
+    let img = document.getElementById("inputImg").value;
+    let age = document.getElementById("inputAge").value;
+    let newObj = new Student(name,age,img);
+    students.push(newObj);
+    show();
+  }
+
+  function xoa(index) {
+    students.splice(index, 1);
+    show();
+  }
+</script>
